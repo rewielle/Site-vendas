@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,63 +6,194 @@
 
 :root {
   --creme: #FAF3E7;
-  --dourado: #D4A853;
-  --rose-light: #FCE8EC;
+  --creme-dark: #F0E6D2;
+  --dourado: #C9953A;
+  --dourado-light: #E8C97A;
+  --dourado-dark: #A87830;
   --marrom: #3D2B1F;
+  --marrom-light: #7A5240;
+  --rose: #FCE8EC;
 }
 
 * {
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   font-family: 'Lato', sans-serif;
   background-color: var(--creme);
   color: var(--marrom);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle background texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(212, 168, 83, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(252, 232, 236, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(212, 168, 83, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .font-playfair {
   font-family: 'Playfair Display', serif;
 }
 
-.gradient-hero {
-  background: linear-gradient(135deg, #FAF3E7 0%, #FCE8EC 50%, #FAF3E7 100%);
+/* Cart slide animation */
+.cart-overlay {
+  transition: opacity 0.3s ease;
 }
 
-.gradient-section {
-  background: linear-gradient(180deg, #FDFAF5 0%, #FAF3E7 100%);
+.cart-panel {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.kit-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(61, 43, 31, 0.15);
+.cart-panel-closed {
+  transform: translateY(100%);
 }
 
-.btn-primary {
-  @apply bg-dourado-500 hover:bg-dourado-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-md hover:shadow-lg;
+.cart-panel-open {
+  transform: translateY(0);
 }
 
-.btn-secondary {
-  @apply border-2 border-dourado-500 text-dourado-600 hover:bg-dourado-500 hover:text-white font-bold py-3 px-8 rounded-full transition-all duration-300;
+/* Fade in animation for sections */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.section-title {
-  @apply font-playfair text-3xl md:text-4xl font-bold text-marrom-800 text-center mb-4;
+.animate-fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.section-subtitle {
-  @apply text-marrom-600 text-center text-lg mb-12 max-w-2xl mx-auto;
+/* Horizontal scroll for festa na caixa */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Confetti dots */
-.confetti-dot {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.4;
-  animation: float 6s ease-in-out infinite;
+.scroll-snap-x > * {
+  scroll-snap-align: center;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(180deg); }
+/* Hide scrollbar but allow scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Gold shimmer effect on buttons */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.btn-gold {
+  background: linear-gradient(110deg, #C9953A 0%, #E8C97A 25%, #C9953A 50%, #E8C97A 75%, #C9953A 100%);
+  background-size: 200% 100%;
+  color: white;
+  font-weight: 700;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(201, 149, 58, 0.3);
+}
+
+.btn-gold:active {
+  transform: scale(0.97);
+  box-shadow: 0 1px 4px rgba(201, 149, 58, 0.3);
+}
+
+.btn-outline-gold {
+  border: 1.5px solid var(--dourado);
+  color: var(--dourado-dark);
+  font-weight: 700;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.btn-outline-gold:active {
+  background: var(--dourado);
+  color: white;
+}
+
+/* Card styling */
+.card {
+  background: white;
+  border: 1px solid rgba(212, 168, 83, 0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+/* Decorative gold line */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--dourado-light), transparent);
+}
+
+/* WhatsApp green button */
+.btn-whatsapp {
+  background: #25D366;
+  color: white;
+  font-weight: 700;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:active {
+  transform: scale(0.97);
+  background: #1fb855;
+}
+
+/* Badge pulse */
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.badge-pulse {
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+/* Input styling */
+input[type="text"],
+input[type="date"] {
+  background: var(--creme);
+  border: 1px solid rgba(212, 168, 83, 0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: var(--marrom);
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus {
+  border-color: var(--dourado);
+}
+
+input::placeholder {
+  color: #B8A080;
 }

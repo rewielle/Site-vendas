@@ -1,15 +1,23 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { CartProvider } from "@/lib/CartContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Leva e Monta Decor | Festa na Mesa",
+  title: "Leva & Monta Decor | Decoração para Festas",
   description:
-    "Decoração de mesa para festas, mêsversários e mini weddings. Simples, rápido e econômico! Monte sua festa dos sonhos sem complicação.",
+    "Decorações práticas e encantadoras para a sua festa. Kits pegue e monte, festa na caixa e itens para aluguel em Recife, Olinda, Paulista e região.",
   openGraph: {
-    title: "Leva e Monta Decor | Festa na Mesa",
-    description: "A sua festa de mesa com design moderno e sem complicação.",
+    title: "Leva & Monta Decor",
+    description: "Decorações práticas e encantadoras para a sua festa.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#FAF3E7",
 };
 
 export default function RootLayout({
@@ -21,9 +29,15 @@ export default function RootLayout({
     <html lang="pt-BR">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
       </head>
-      <body>{children}</body>
+      <body>
+        <CartProvider>{children}</CartProvider>
+      </body>
     </html>
   );
 }
